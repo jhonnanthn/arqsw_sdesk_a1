@@ -3,6 +3,9 @@ package br.usjt.arqsw.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
+
 /**
  * 
  * @author Jhonnanthn William Carlos Balsas - 816119078
@@ -14,6 +17,7 @@ public class Chamado implements Serializable{
 	public static final String FECHADO = "fechado";
 	
 	private int numero;
+	@NotNull
 	private String nome;
 	private Date dataAbertura;
 	private Date dataFechamento;
