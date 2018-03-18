@@ -15,7 +15,6 @@
     <link href="css/style.css" rel="stylesheet">
     
 </head>
-
 <body>
     <!-- Barra superior com os menus de navegação -->
     <c:import url="Menu.jsp" />
@@ -38,7 +37,7 @@
             <div class="row">
 	            <div class="form-group col-md-4">
 				    <label for="descricao">Descrição</label>
-				    <textarea class="form-control" id="chamado.nome" name="chamado.nome" rows="3"></textarea>
+				    <textarea class="form-control" id="chamado.nome" name="nome" rows="3"></textarea>
 				</div>
 			</div>
             <div id="actions" class="row">

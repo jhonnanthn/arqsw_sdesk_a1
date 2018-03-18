@@ -76,4 +76,18 @@ public class ChamadoDAO {
 		}
 		return lista;
 	}
+
+	public void adicionarChamado(int id, String nome) throws IOException {
+		String query = "INSERT INTO CHAMADO (DESCRICAO, STATUS, DT_ABERTURA, ID_FILA) " + 
+				"VALUES(?, 'ABERTO', SYSDATE(), ?);";
+		try (PreparedStatement pst = conn.prepareStatement(query);) {
+			pst.setString(1, nome);
+			pst.setInt(2, id);
+
+			pst.execute();
+
+		} catch (SQLException e) {
+			throw new IOException(e);
+		}
+	}
 }

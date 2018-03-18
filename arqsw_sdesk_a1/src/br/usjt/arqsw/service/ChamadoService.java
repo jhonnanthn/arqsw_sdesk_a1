@@ -21,4 +21,7 @@ public class ChamadoService {
 	public ArrayList<Chamado> listarChamados(Fila fila) throws IOException{
 		return chamadoDAO.listarChamadosByFila(fila.getId());
 	}
+	public void adicionarChamado(int id, String nome) throws IOException {
+		chamadoDAO.adicionarChamado(id, nome);
+	}
 }

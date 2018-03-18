@@ -31,11 +31,13 @@ public class UsuarioDAO {
 		Usuario usuario = new Usuario();
 		try (PreparedStatement pst = conn.prepareStatement(query);) {
 			pst.setString(1, nome);
-			pst.setString(1, password);
+			pst.setString(2, password);
 
 			try (ResultSet rs = pst.executeQuery();) {
+				while(rs.next()) {
 					usuario.setNome(rs.getString("NOME"));
 					usuario.setPassword(rs.getString("PASSWORD"));
+				}
 			} catch (SQLException e) {
 				throw new IOException(e);
 			}

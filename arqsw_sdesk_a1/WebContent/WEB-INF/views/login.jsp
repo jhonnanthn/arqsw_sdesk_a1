@@ -15,30 +15,35 @@
 
 <body>
     <!-- Barra superior com os menus de navegação -->
-    <c:import url="Menu.jsp" />
     <!-- Container Principal -->
-    <div id="main" class="container">
-    	<br><br>
-        <div class="jumbotron">
-            <h1> Login </h1>
-            <div class="row">
-            	    <div class="form-group col-md-4">
-				    Usuário
+    <form action="logar">
+	    <div id="main" class="container" style="padding-bottom: 10px;">
+	        <div class="jumbotron">
+	            <h1> Login </h1>
+	            <div class="row">
+	            	    <div class="form-group col-md-4">
+					    Usuário
+					</div>
+		            <div class="form-group col-md-4">
+					    <input type="text" class="form-control" id="usuario.nome" name="nome">
+					</div>
 				</div>
-	            <div class="form-group col-md-4">
-				    <input type="text" class="form-control" id="usuario.nome" name="usuario.nome">
+				<div class="row">
+					<div class="form-group col-md-4">
+					    Senha
+					</div>
+		            <div class="form-group col-md-4">
+					    <input type="password" class="form-control" id="password" name="password">
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="form-group col-md-4">
-				    Senha
-				</div>
-	            <div class="form-group col-md-4">
-				    <input type="password" class="form-control" id="usuario.password" name="usuario.password">
-				</div>
-			</div>
-        </div>
-    </div>
+				<div id="actions" class="row">
+	                <div class="col-md-12">
+                		    <button type="submit" class="btn btn-primary">Acessar</button>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+    </form>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 </body>

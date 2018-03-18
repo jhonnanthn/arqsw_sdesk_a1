@@ -66,17 +66,16 @@ public class ManterChamadosController {
 	}
 
 	@RequestMapping("/login")
-	public String login(@Valid Usuario usuario, Model model, HttpSession session) {
+	public String login(Model model) {
 		return "login";
 	}
 	
 	@RequestMapping("/logar")
-	public String logar(@Valid Usuario usuario, Model model, HttpSession session) {
+	public String logar(@Valid Usuario usuario, BindingResult result, Model model, HttpSession session) {
 		try {
 			Usuario usuarioLogado = usuarioService.buscaUsuario(usuario.getNome(), usuario.getPassword());
 			if(usuarioLogado != null) {
-				Usuario logado = (Usuario) session.getAttribute("usuarioLogado");
-				model.addAttribute("usuarioLogado", logado);
+				session.setAttribute("usuarioLogado", usuarioLogado);
 				return "index";
 			} else {
 				return "Erro";
@@ -101,6 +100,7 @@ public class ManterChamadosController {
 	@RequestMapping("/adicionar_chamado")
 	public String adicionar_chamado(@Valid Fila fila, @Valid Chamado chamado, BindingResult result, Model model) {
 		try {
+			chamadoService.adicionarChamado(fila.getId(), chamado.getNome());
 			model.addAttribute("chamado", chamadoService.listarChamados(fila));
 			return "ChamadoListarExibir";
 		} catch (IOException e) {
