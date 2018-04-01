@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import br.usjt.arqsw.service.UsuarioService;
  * @author asbonato
  *
  */
+@Transactional
 @Controller
 public class ManterChamadosController {
 	private FilaService filaService;
@@ -66,14 +68,15 @@ public class ManterChamadosController {
 	}
 
 	@RequestMapping("/login")
-	public String login(Model model) {
+	public String login(HttpSession session, Model model) {
+		session.invalidate();
 		return "login";
 	}
 	
 	@RequestMapping("/logar")
 	public String logar(@Valid Usuario usuario, BindingResult result, Model model, HttpSession session) {
 		try {
-			Usuario usuarioLogado = usuarioService.buscaUsuario(usuario.getNome(), usuario.getPassword());
+			Usuario usuarioLogado = usuarioService.buscaUsuario(usuario);
 			if(usuarioLogado != null) {
 				session.setAttribute("usuarioLogado", usuarioLogado);
 				return "index";

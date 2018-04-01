@@ -2,14 +2,18 @@ package br.usjt.arqsw.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 /**
  * 
  * @author jhonnanthn.balsas
  *
  */
+@Entity
 public class Usuario implements Serializable{
 	/**
 	 * 
@@ -18,7 +22,11 @@ public class Usuario implements Serializable{
 
 	@NotNull(message="Não é permitido campo nulo.")
 	@Min(value=1, message="Quantidade de caracteres inválida.")
+	@Column(name="USERNAME")
+	@Id
 	private String nome;
+	@NotNull
+	@Column(name="PASSWORD")
 	private String password;
 	
 	public String getNome() {

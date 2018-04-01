@@ -18,6 +18,9 @@
                     <li>
                     		<a href="listar_filas_exibir">Consultar</a>
                     </li>
+                    <li>
+                    		<a href="login">Sair</a>
+                    </li>
                 </ul>
             </div>
         </div>

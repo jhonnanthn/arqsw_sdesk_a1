@@ -7,7 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,75 +23,33 @@ import br.usjt.arqsw.entity.Fila;
 @Repository
 public class ChamadoDAO {
 	private Connection conn;
-
-	@Autowired
-	public ChamadoDAO(DataSource dataSource) throws IOException{
-		try {
-			this.conn = dataSource.getConnection();
-		} catch (SQLException e) {
-			throw new IOException(e);
-		}
-	}
+	@PersistenceContext
+	EntityManager manager;
 	
 	public int criarChamado(Chamado chamado) {
 		Date dataAbertura = new Date(chamado.getDataAbertura().getTime());
 		return 0;
 	}
 
-	public ArrayList<Chamado> listarChamadosByFila(int idFila) throws IOException {
-		String query = 
-				"SELECT" + 
-				"	C.ID_CHAMADO 						AS numero," + 
-				"    C.DESCRICAO 	 					AS nome," + 
-				"    C.STATUS			 				AS status," + 
-				"    C.DT_ABERTURA						AS dataAbertura," + 
-				"    C.DT_FECHAMENTO						AS dataFechamento," + 
-				"    F.ID_FILA							AS ID_FILA," + 
-				"    F.NM_FILA							AS NOME_FILA" + 
-				" FROM" + 
-				"	CHAMADO C, FILA F" + 
-				"    WHERE C.ID_FILA = F.ID_FILA" + 
-				"    AND C.ID_FILA = ?";
-		ArrayList<Chamado> lista = new ArrayList<>();
-		try(PreparedStatement pst = conn.prepareStatement(query);){
-				pst.setInt(1, idFila);
+	public List<Chamado> listarChamadosByFila(Fila fila) throws IOException {
+		//conectei minha fila com a persistencia
+		fila = manager.find(Fila.class, fila.getId());
+		
+		String jpql = "select c from Chamado c where c.fila = :fila";
+		
+		Query query = manager.createQuery(jpql);
+		query.setParameter("fila", fila);
 
-			try (ResultSet rs = pst.executeQuery();) {
-				while (rs.next()) {
-					Chamado chamado = new Chamado();
-					chamado.setNumero(rs.getInt("numero"));
-					chamado.setNome(rs.getString("nome"));
-					chamado.setStatus(rs.getString("status"));
-					chamado.setDataAbertura(rs.getDate("dataAbertura"));
-					chamado.setDataFechamento(rs.getDate("dataFechamento"));
-					
-					Fila fila = new Fila();
-					fila.setId(rs.getInt("ID_FILA"));
-					fila.setNome(rs.getString("NOME_FILA"));
-					chamado.setFila(fila);
-					lista.add(chamado);
-				}
-			} catch (SQLException e) {
-				throw new IOException(e);
-			}
-
-		} catch (SQLException e) {
-			throw new IOException(e);
-		}
-		return lista;
+		List<Chamado> result = query.getResultList();
+		return result;
 	}
 
 	public void adicionarChamado(int id, String nome) throws IOException {
-		String query = "INSERT INTO CHAMADO (DESCRICAO, STATUS, DT_ABERTURA, ID_FILA) " + 
-				"VALUES(?, 'ABERTO', SYSDATE(), ?);";
-		try (PreparedStatement pst = conn.prepareStatement(query);) {
-			pst.setString(1, nome);
-			pst.setInt(2, id);
-
-			pst.execute();
-
-		} catch (SQLException e) {
-			throw new IOException(e);
-		}
+		Chamado chamado = new Chamado();
+		Fila fila = new Fila();
+		fila.setId(id);
+		chamado.setFila(fila);
+		chamado.setNome(nome);
+		manager.persist(chamado);
 	}
 }

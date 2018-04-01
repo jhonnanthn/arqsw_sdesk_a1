@@ -1,51 +1,32 @@
 package br.usjt.arqsw.dao;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
-import javax.sql.DataSource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import br.usjt.arqsw.entity.Usuario;
 
 @Repository
 public class UsuarioDAO {
-	private Connection conn;
+	@PersistenceContext
+	EntityManager manager;
 
-	@Autowired
-	public UsuarioDAO(DataSource dataSource) throws IOException{
-		try {
-			this.conn = dataSource.getConnection();
-		} catch (SQLException e) {
-			throw new IOException(e);
-		}
-	}
+	public Usuario buscaUsuario(Usuario usuario) throws IOException {
+		String jpql = "select user from Usuario user where user.nome = :nome and user.password = :password";
 
-	public Usuario buscaUsuario(String nome, String password) throws IOException {
-		String query = "SELECT USERNAME AS NOME, PASSWORD FROM USUARIO WHERE USERNAME = ? AND PASSWORD = ?";
-		Usuario usuario = new Usuario();
-		try (PreparedStatement pst = conn.prepareStatement(query);) {
-			pst.setString(1, nome);
-			pst.setString(2, password);
+		Query query = manager.createQuery(jpql);
+		query.setParameter("nome", usuario.getNome());
+		query.setParameter("password", usuario.getPassword());
 
-			try (ResultSet rs = pst.executeQuery();) {
-				while(rs.next()) {
-					usuario.setNome(rs.getString("NOME"));
-					usuario.setPassword(rs.getString("PASSWORD"));
-				}
-			} catch (SQLException e) {
-				throw new IOException(e);
-			}
-
-		} catch (SQLException e) {
-			throw new IOException(e);
-		}
-		return usuario;
+		List<Usuario> result = query.getResultList();
+		if(result.size() > 0)	return result.get(0);
+		else						return null;
+		
 	}
 
 }

@@ -16,8 +16,8 @@ public class UsuarioService {
 	public UsuarioService(UsuarioDAO usuarioDAO) {
 		this.usuarioDAO = usuarioDAO;
 	}
-	public Usuario buscaUsuario(String nome, String password) throws IOException {
-		return usuarioDAO.buscaUsuario(nome, password);
+	public Usuario buscaUsuario(Usuario usuario) throws IOException {
+		return usuarioDAO.buscaUsuario(usuario);
 	}
 
 }
