@@ -52,4 +52,8 @@ public class ChamadoDAO {
 		chamado.setNome(nome);
 		manager.persist(chamado);
 	}
+
+	public List<Chamado> listarChamados() {
+		return manager.createQuery("select c from Chamado c").getResultList();
+	}
 }

@@ -21,6 +21,6 @@ public class FilaService {
 		return dao.listarFilas();
 	}
 	public Fila carregar(int id) throws IOException{
-		return null;
+		return dao.carregaFila(id);
 	}
 }

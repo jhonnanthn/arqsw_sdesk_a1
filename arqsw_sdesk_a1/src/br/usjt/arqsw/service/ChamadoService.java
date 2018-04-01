@@ -24,4 +24,7 @@ public class ChamadoService {
 	public void adicionarChamado(int id, String nome) throws IOException {
 		chamadoDAO.adicionarChamado(id, nome);
 	}
+	public List<Chamado> listarChamados() {
+		return chamadoDAO.listarChamados();
+	}
 }
