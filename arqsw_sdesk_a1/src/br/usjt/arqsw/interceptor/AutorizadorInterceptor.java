@@ -12,7 +12,7 @@ public class AutorizadorInterceptor extends HandlerInterceptorAdapter {
 		String uri = request.getRequestURI();
 		if(uri.endsWith("login") || uri.endsWith("logar") ||
 				uri.contains("css") || uri.contains("js") ||
-				uri.contains("fonts")){
+				uri.contains("fonts") || uri.contains("rest")){
 				return true;
 		}
 		if (request.getSession().getAttribute("usuarioLogado") != null) {

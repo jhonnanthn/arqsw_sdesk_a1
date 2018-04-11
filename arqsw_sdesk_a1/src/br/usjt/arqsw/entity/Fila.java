@@ -25,8 +25,6 @@ public class Fila implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@NotNull(message="A fila não pode ser vazia")
-	@Min(value=1, message="A fila não pode ser vazia")
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	@Id
 	@Column(name="ID_FILA")
@@ -61,5 +59,4 @@ public class Fila implements Serializable{
 	public String toString() {
 		return "Fila [id=" + id + ", nome=" + nome + "]";
 	}
-	
 }

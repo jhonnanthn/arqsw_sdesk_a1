@@ -50,6 +50,8 @@ public class ChamadoDAO {
 		fila.setId(id);
 		chamado.setFila(fila);
 		chamado.setNome(nome);
+		chamado.setDataAbertura(new Date());
+		chamado.setStatus("ABERTO");
 		manager.persist(chamado);
 	}
 

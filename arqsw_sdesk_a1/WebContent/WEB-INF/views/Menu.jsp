@@ -16,6 +16,9 @@
                     		<a href="page_adicionar">Adicionar</a>
                     </li>
                     <li>
+                    		<a href="listar_filas">Fila</a>
+                    </li>
+                    <li>
                     		<a href="listar_filas_exibir">Consultar</a>
                     </li>
                     <li>

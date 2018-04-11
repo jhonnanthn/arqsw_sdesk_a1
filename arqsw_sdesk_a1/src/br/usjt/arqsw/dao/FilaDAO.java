@@ -30,4 +30,8 @@ public class FilaDAO {
 	public Fila carregaFila(int id) throws IOException {
 		return manager.find(Fila.class, id);
 	}
+
+	public void adicionarFila(Fila fila) {
+		manager.persist(fila);;
+	}
 }

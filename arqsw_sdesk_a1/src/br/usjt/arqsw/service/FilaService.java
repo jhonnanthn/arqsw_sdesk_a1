@@ -23,4 +23,7 @@ public class FilaService {
 	public Fila carregar(int id) throws IOException{
 		return dao.carregaFila(id);
 	}
+	public void adicionarFila(Fila fila) {
+		dao.adicionarFila(fila);
+	}
 }

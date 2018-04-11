@@ -100,6 +100,17 @@ public class ManterChamadosController {
 		}
 	}
 	
+	@RequestMapping("/listar_filas")
+	public String listarFilasExibir(@Valid Fila fila, BindingResult result, Model model) {
+		try {
+			model.addAttribute("fila", filaService.listarFilas());
+			return "FilaListarExibir";
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Erro";
+		}
+	}
+	
 	@RequestMapping("/adicionar_chamado")
 	public String adicionar_chamado(@Valid Fila fila, @Valid Chamado chamado, BindingResult result, Model model) {
 		try {
@@ -112,15 +123,26 @@ public class ManterChamadosController {
 		}
 	}
 	
-	@RequestMapping("/page_adicionar")
-	public String page_adicionar(Model model) {
+	@RequestMapping("/adicionar_fila")
+	public String adicionar_fila(Fila fila, Model model) {
 		try {
-			model.addAttribute("filas", listarFilas());
-			return "ChamadoAdicionar";
+			filaService.adicionarFila(fila);
+			model.addAttribute("fila", filaService.listarFilas());
+			return "FilaListarExibir";
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "Erro";
 		}
 	}
-
+	
+	@RequestMapping("/page_adicionar")
+	public String page_adicionar(Model model) {
+		try {
+			model.addAttribute("filas", listarFilas());
+			return "Adicionar";
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Erro";
+		}
+	}
 }
