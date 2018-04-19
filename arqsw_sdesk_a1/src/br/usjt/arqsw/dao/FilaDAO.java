@@ -34,4 +34,12 @@ public class FilaDAO {
 	public void adicionarFila(Fila fila) {
 		manager.persist(fila);;
 	}
+
+	public void removerFila(Fila fila) {
+		manager.remove(fila);
+	}
+
+	public void alterarFila(Fila fila) {
+		manager.merge(fila);
+	}
 }

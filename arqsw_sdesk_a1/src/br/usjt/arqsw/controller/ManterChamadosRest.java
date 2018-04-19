@@ -96,6 +96,37 @@ public class ManterChamadosRest {
 		}
 	}
 	
+	@Transactional
+	@RequestMapping(method = RequestMethod.GET, value = "rest/removeFila/{id}")
+		public @ResponseBody String removeFila(
+				@PathVariable("id") String id) {
+		try {
+			Fila fila = fService.carregar(Integer.parseInt(id));
+			List<Chamado> chamados = cService.listarChamados(fila);
+			if(chamados.size() == 0)	{
+				fService.removerFila(fila);
+				return "OK";
+			} else	{
+				return "FALHA";
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Erro";
+		}
+	}
+	
+	@Transactional
+	@RequestMapping(method = RequestMethod.GET, value = "rest/editarFila")
+		public @ResponseBody String removeFila(
+				String id, String nome, String imagem) {
+		Fila fila = new Fila();
+		fila.setFigura(imagem);
+		fila.setId(Integer.parseInt(id));
+		fila.setNome(nome);
+		fService.alterarFila(fila);
+		return "Alterado";
+	}
+	
 	/**
 	 * Fecha chamados.
 	 * @param chamados: lista de chamados a serem fechados.

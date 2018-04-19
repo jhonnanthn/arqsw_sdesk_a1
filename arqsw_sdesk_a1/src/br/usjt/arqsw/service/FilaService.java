@@ -26,4 +26,10 @@ public class FilaService {
 	public void adicionarFila(Fila fila) {
 		dao.adicionarFila(fila);
 	}
+	public void removerFila(Fila id) {
+		dao.removerFila(id);
+	}
+	public void alterarFila(Fila fila) {
+		dao.alterarFila(fila);
+	}
 }
